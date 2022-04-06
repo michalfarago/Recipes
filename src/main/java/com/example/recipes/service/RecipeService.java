@@ -3,6 +3,9 @@ package com.example.recipes.service;
 import com.example.recipes.entity.Recipe;
 import com.example.recipes.repository.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -55,5 +58,10 @@ public class RecipeService {
 
     public List<Recipe> getRecipesByCategory(String category){
         return recipeRepository.findAllByCategoryIgnoreCaseOrderByCreatedOnDesc(category);
+    }
+
+    public Page<Recipe> getRecipesByPage(int page, int size){
+        Pageable recipes = PageRequest.of(page, size);
+        return recipeRepository.findAll(recipes);
     }
 }

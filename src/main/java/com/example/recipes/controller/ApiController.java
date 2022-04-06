@@ -5,6 +5,7 @@ import com.example.recipes.security.UserDetailsImpl;
 import com.example.recipes.service.RecipeService;
 import com.example.recipes.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -64,5 +65,10 @@ public class ApiController {
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Wrong query parameter.");
         }
+    }
+
+    @GetMapping("/page")
+    public Page<Recipe> getRecipePage(@RequestParam int page, @RequestParam int size){
+        return recipeService.getRecipesByPage(page, size);
     }
 }
